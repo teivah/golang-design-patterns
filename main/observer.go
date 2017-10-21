@@ -7,12 +7,10 @@ type observable interface {
 	notify()
 }
 
-//Subscribers map
-var subscribers = make(map[string]func())
-
 type observerPoint struct {
-	x int
-	y int
+	x           int
+	y           int
+	subscribers map[string]func()
 }
 
 //Example function on a point
@@ -24,19 +22,19 @@ func (point *observerPoint) changeXValue(x int) {
 
 //Register another subscriber
 func (point *observerPoint) register(subscriber string, f func()) {
-	subscribers[subscriber] = f
+	point.subscribers[subscriber] = f
 }
 
 //Handle notifications
 func (point *observerPoint) notify() {
-	for k, v := range subscribers {
+	for k, v := range point.subscribers {
 		fmt.Printf("Notifying subscriber %v\n", k)
 		v()
 	}
 }
 
 func main() {
-	point := observerPoint{4, 2}
+	point := observerPoint{4, 2, make(map[string]func())}
 	var pointObservable observable
 	pointObservable = &point
 

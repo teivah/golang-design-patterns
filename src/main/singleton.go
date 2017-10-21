@@ -5,28 +5,28 @@ import (
 	"fmt"
 )
 
-type point struct {
+type singletonPoint struct {
 	x int
 	y int
 }
 
 //Singleton instance
-var instance point = point{}
+var instance singletonPoint = singletonPoint{}
 
 //Lazy singleton instance
-var lazyInstance point
+var lazyInstance singletonPoint
 
 //Object performing exactly one action
 var once sync.Once
 
-func getPointInstance() point {
+func getPointInstance() singletonPoint {
 	return instance
 }
 
-func getLazyPointInstance() point {
+func getLazyPointInstance() singletonPoint {
 	once.Do(func() {
 		//The initialization can be done only once
-		lazyInstance = point{}
+		lazyInstance = singletonPoint{}
 	})
 
 	return lazyInstance

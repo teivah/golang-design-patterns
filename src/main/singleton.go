@@ -32,7 +32,7 @@ func getLazyPointInstance() singletonPoint {
 	return lazyInstance
 }
 
-func main() {
+func Singleton() {
 	i1 := getPointInstance()
 	fmt.Printf("%p\n", &i1) //0xc042008160
 

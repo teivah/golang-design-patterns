@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type observable interface {
 	register(string, func())
@@ -33,7 +35,7 @@ func (point *observerPoint) notify() {
 	}
 }
 
-func main() {
+func Observer() {
 	point := observerPoint{4, 2, make(map[string]func())}
 	var pointObservable observable
 	pointObservable = &point

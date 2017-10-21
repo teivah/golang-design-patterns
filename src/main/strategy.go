@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"../util"
+	"util"
 )
 
 //Main compute function
@@ -24,7 +24,7 @@ func add(p *util.Point) {
 	p.X = p.X + 1
 }
 
-func main() {
+func Strategy() {
 	p := util.Point{4, 2}
 
 	compute(p, slice) //2, 1

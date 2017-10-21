@@ -1,7 +1,9 @@
 //Inspired by http://blog.ralch.com/tutorial/design-patterns/golang-decorator/
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 const id = "id"
 const retry = "retry"
@@ -32,7 +34,7 @@ func (d *DatabaseRetry) retrieve(args map[string]int) (string, error) {
 	return "bar", nil
 }
 
-func main() {
+func Decorator() {
 	database := Database{}
 	databaseRetrier := database.retrier
 	ids := [2]int{0, 7}

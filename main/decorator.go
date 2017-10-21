@@ -2,13 +2,13 @@ package main
 
 import "fmt"
 
-type DecoratorPoint struct {
+type decoratorPoint struct {
 	x int
 	y int
 }
 
 //Main compute function
-func compute(p DecoratorPoint, decorators ... func(*DecoratorPoint)) {
+func compute(p decoratorPoint, decorators ... func(*decoratorPoint)) {
 	for _, v := range decorators {
 		v(&p)
 	}
@@ -17,18 +17,18 @@ func compute(p DecoratorPoint, decorators ... func(*DecoratorPoint)) {
 }
 
 //Slice decorator function
-func slice(p *DecoratorPoint) {
+func slice(p *decoratorPoint) {
 	p.x = p.x / 2
 	p.y = p.y / 2
 }
 
-//Slice decorator function
-func add(p *DecoratorPoint) {
+//Add decorator function
+func add(p *decoratorPoint) {
 	p.x = p.x + 1
 }
 
 func main() {
-	p := DecoratorPoint{2, 4}
+	p := decoratorPoint{4, 2}
 
-	compute(p, slice, add) //2, 2
+	compute(p, slice, add) //3, 1
 }

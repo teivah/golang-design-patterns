@@ -13,6 +13,12 @@
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 
+.idea/.name
+.idea/golang-design-patterns.iml
+.idea/modules.xml
+.idea/saveactions_settings.xml
+.idea/vcs.xml
+
 # User-specific stuff:
 .idea/**/workspace.xml
 .idea/**/tasks.xml

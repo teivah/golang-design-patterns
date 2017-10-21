@@ -1,34 +1,56 @@
+//Inspired by http://blog.ralch.com/tutorial/design-patterns/golang-decorator/
 package main
 
 import "fmt"
 
-type decoratorPoint struct {
-	x int
-	y int
+const id = "id"
+const retry = "retry"
+
+type Retrieve interface {
+	retrieve(map[string]int) (string, error)
 }
 
-//Main compute function
-func compute(p decoratorPoint, decorators ... func(*decoratorPoint)) {
-	for _, v := range decorators {
-		v(&p)
+type Database struct {
+	retrier DatabaseRetry
+}
+
+type DatabaseRetry struct {
+}
+
+func (d *Database) retrieve(args map[string]int) (string, error) {
+	fmt.Printf("Retrieve %v\n", args[id])
+	if args[id] == 7 {
+		return "", fmt.Errorf("Transient database error")
+	} else {
+		return "foo", nil
 	}
-
-	fmt.Printf("%v, %v", p.x, p.y)
 }
 
-//Slice decorator function
-func slice(p *decoratorPoint) {
-	p.x = p.x / 2
-	p.y = p.y / 2
-}
-
-//Add decorator function
-func add(p *decoratorPoint) {
-	p.x = p.x + 1
+func (d *DatabaseRetry) retrieve(args map[string]int) (string, error) {
+	fmt.Printf("Retry with %v\n", args[id])
+	//Do something to handle an automated retry
+	return "bar", nil
 }
 
 func main() {
-	p := decoratorPoint{4, 2}
+	database := Database{}
+	databaseRetrier := database.retrier
+	ids := [2]int{0, 7}
+	args := make(map[string]int)
+	args[retry] = 3
 
-	compute(p, slice, add) //3, 1
+	for _, v := range ids {
+		var i Retrieve = &database
+
+		args[id] = v
+		name, ok := i.retrieve(args)
+
+		if ok == nil {
+			fmt.Printf("Result: %v\n", name)
+		} else {
+			i := &databaseRetrier
+			name, _ := i.retrieve(args) //We do not test the errors here for the sake of clarity
+			fmt.Printf("Result: %v\n", name)
+		}
+	}
 }

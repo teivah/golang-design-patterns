@@ -13,7 +13,7 @@ type observerPoint struct {
 	subscribers map[string]func()
 }
 
-//Example function on a point
+//Sample method
 func (point *observerPoint) changeXValue(x int) {
 	point.x = x
 	fmt.Printf("Change x value to %v\n", x)
